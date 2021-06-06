@@ -23,7 +23,7 @@ def testCameraChoix():
             numSaisie = int(input("Enter the camera number you wish to test, -1 if you have finished : "))
             
             if(numSaisie in l):
-                print("press q to close the window.")
+                print("press escape to close the window.")
                 cap = cv.VideoCapture(numSaisie)
                 while True:
                     ret, frame = cap.read()
