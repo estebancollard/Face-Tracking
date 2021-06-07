@@ -2,6 +2,9 @@ import cv2 as cv
 import sys
 
 def getListNumCamera():
+    '''
+    returns the list of available camera numbers
+    '''
     l = []
     for i in range(16):
         vidcap = cv.VideoCapture(i)
@@ -10,6 +13,9 @@ def getListNumCamera():
     return l
 
 def testCameraChoix():
+    '''
+    function that makes the user test the selected camera number
+    '''
     l=getListNumCamera()
     if(len(l)>0):
         print(str(len(l))+" camera found.")

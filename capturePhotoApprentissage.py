@@ -8,6 +8,9 @@ import tkinter
 
 
 def getNameFile(chemin):
+    '''
+    returns the name of a file from its path
+    '''
     c = chemin.split("/")
     c2 = c[-1].split(".")
     valRet = c2[0]
@@ -17,6 +20,9 @@ def getNameFile(chemin):
     return valRet
 
 def capturePhoto(numeroCamera, dossierPhoto):
+    '''
+    take a picture for each image in the folder dossierPhoto
+    '''
     # creation dossier photo
     if os.path.exists("./photo/"):
         shutil.rmtree('./photo/')

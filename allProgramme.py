@@ -6,6 +6,9 @@ import sys
 import visageFilDeFer
 
 def main(argv):
+    '''
+    Launch the project
+    '''
     numeroCamera = numCamera.testCameraChoix()
     capturePhotoApprentissage.capturePhoto(numeroCamera, "./images/image texte apprentissage/")
     apprentissagePhoto.getDataPhoto()

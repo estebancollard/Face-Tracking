@@ -6,6 +6,9 @@ import fonctionReconnaissance as fctReco
 
 
 def writeOnFile(sheet, topNose, bottomNose, eyeLeftLeft, eyeLeftRight, eyeRightLeft, eyeRightRight, chin, photo, indice):
+    '''
+    writes in the excel file passed in parameter the various information of the face
+    '''
     photoSplit = photo.split(",")
     sheet.write(indice, 0, int(photoSplit[0][-3:]))
     sheet.write(indice, 1, int(photoSplit[1][:3]))
@@ -33,6 +36,9 @@ def writeOnFile(sheet, topNose, bottomNose, eyeLeftLeft, eyeLeftRight, eyeRightL
 
 
 def initialisationExcel(sheet):
+    '''
+    initialize the excel file where the results will be written
+    '''
     sheet.write(0, 0, "X")
     sheet.write(0, 1, "Y")
     sheet.write(0, 2, "topNoseX")
@@ -52,7 +58,9 @@ def initialisationExcel(sheet):
 
 
 def getDataPhoto():
-
+    '''
+    retrieves jpg files from the photo folder performs facial recognition on them
+    '''
     listPhoto = glob.glob("./photo/*.jpg")
     listPhoto.sort()
 

@@ -11,6 +11,9 @@ from sklearn.model_selection import cross_validate
 from joblib import dump
 
 def evaluate_classifiers(clfs, names, X, y):
+    '''
+    evaluate learning method for data X and y
+    '''
     scores = {}
     best = None
     best_score = 0
@@ -51,6 +54,10 @@ def getMinMaxXY(fileName):
 
 
 def testLearning():
+    '''
+    function who try to learn data
+    does not work with face data
+    '''
     clfs = [DummyClassifier(strategy="stratified"),
             GaussianNB(), 
             # SVC(), 

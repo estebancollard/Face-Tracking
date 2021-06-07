@@ -35,7 +35,9 @@ def find_faces(img, model):
     return faces
 
 def move_box(box, offset):
-    """Move the box to direction specified by vector offset"""
+    """
+    Move the box to direction specified by vector offset
+    """
     left_x = box[0] + offset[0]
     top_y = box[1] + offset[1]
     right_x = box[2] + offset[0]
@@ -43,7 +45,9 @@ def move_box(box, offset):
     return [left_x, top_y, right_x, bottom_y]
 
 def get_square_box(box):
-    """Get a square box out of the given box, by expanding it."""
+    """
+    Get a square box out of the given box, by expanding it.
+    """
     left_x = box[0]
     top_y = box[1]
     right_x = box[2]
@@ -94,7 +98,6 @@ def detect_marks(img, model, face):
         facial landmark points
 
     """
-
     offset_y = int(abs((face[3] - face[1]) * 0.1))
     box_moved = move_box(face, [0, offset_y])
     facebox = get_square_box(box_moved)
@@ -131,29 +134,47 @@ def detect_marks(img, model, face):
 
 
 def getTabPointsFace(marks):
+    '''
+    returns certain points of the face (nose, chin, eye)
+    '''
     return np.array([
-                    marks[27], # Nose haut
-                    marks[30], # Nose bas
-                    marks[8],  # Menton
-                    marks[36], # Eye Gauche G
-                    marks[39], # Eye Gauche D
-                    marks[42], # Eye Droite G
-                    marks[45]  # Eye Droite D
+                    marks[27], # Nose top
+                    marks[30], # Nose bottom
+                    marks[8],  # chin
+                    marks[36], # Eye Left L
+                    marks[39], # Eye Left R
+                    marks[42], # Eye Right L
+                    marks[45]  # Eye Right R
                 ], dtype="double")
 
 def getModelFile():
+    '''
+    return model file
+    '''
     return "models/opencv_face_detector_uint8.pb"
 
 def getConfigFile():
+    '''
+    return config file
+    '''
     return "models/opencv_face_detector.pbtxt"
 
 def getFaceModel():
+    '''
+    return face model
+    '''
     return cv2.dnn.readNetFromTensorflow("models/opencv_face_detector_uint8.pb", "models/opencv_face_detector.pbtxt")
 
 def getLandmark_model():
+    '''
+    return Landmark model
+    '''
     return tf.saved_model.load("models/pose_model")
 
 def main():
+    '''
+    displays the points live
+    '''
     modelFile = getModelFile()
     configFile = getConfigFile()
     face_model = getFaceModel()
@@ -169,15 +190,6 @@ def main():
             for face in faces:
                 marks = detect_marks(img, landmark_model, face)
 
-                image_points = np.array([
-                                            marks[31],     # Nose tip
-                                            marks[8],     # Chin
-                                            marks[36],     # Left eye left corner
-                                            marks[45],     # Right eye right corne
-                                            marks[48],     # Left Mouth corner
-                                            marks[54]      # Right mouth corner
-                                        ], dtype="double")
-                
                 image_points = getTabPointsFace(marks)
                 
                 for p in image_points:
@@ -186,8 +198,6 @@ def main():
 
                 (x,y,w,h) = face
                 eye_center = ((x + w)//2, (y + h)//2)
-                radius = int(round(((w-x) + (h-y))*0.5))
-                #cv2.circle(img, eye_center, radius, (255, 0, 0 ), 4)
                 cv2.ellipse(img, eye_center, ((w-x+50)//2, (h-y+50)//2), 0, 0, 360, (255, 0, 255), 4)
                 
             
